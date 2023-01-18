@@ -3,4 +3,5 @@ __pycache__
 /disabled
 /assets
 /*.zip
-
+/mods_db.json
+/test.py

@@ -10,12 +10,11 @@ from typing import Dict, Any
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import json
 
-from mods_editor import mods_editor
 
-mod_names_dict = {}
-editor = mods_editor()
+# from mods_editor import mods_editor
+
+# editor = mods_editor()
 
 class Ui_Es_mod_namager_linux(object):
     def setupUi(self, Es_mod_namager_linux):
@@ -33,7 +32,6 @@ class Ui_Es_mod_namager_linux(object):
         self.btn_update_mods_db.setGeometry(QtCore.QRect(300, 510, 120, 40))
         self.btn_update_mods_db.setCheckable(False)
         self.btn_update_mods_db.setObjectName("btn_update_mods_db")
-        self.btn_update_mods_db.clicked.connect(self.fill_mods_lists)
 
         self.enabled_mods_list = QtWidgets.QListWidget(self.centralwidget)
         self.enabled_mods_list.setGeometry(QtCore.QRect(10, 40, 260, 450))
@@ -98,41 +96,6 @@ class Ui_Es_mod_namager_linux(object):
         self.retranslateUi(Es_mod_namager_linux)
         QtCore.QMetaObject.connectSlotsByName(Es_mod_namager_linux)
 
-        self.enabled_mods_list.itemDoubleClicked.connect(self.clicked_item_replace)
-        self.disabled_mods_list.itemDoubleClicked.connect(self.clicked_item_replace)
-
-        editor.load_mods_db()
-        self.fill_mods_lists()
-
-    def fill_mods_lists(self):
-        editor.check_new_mods()
-        global mod_names_dict
-
-        self.enabled_mods_list.clear()
-        self.disabled_mods_list.clear()
-        with open("/home/skiyman/programming/pythonProject/ES_mod_manager_linux/mods_db.json", "r+") as file:
-            mods_db = json.load(file)
-
-        self.enabled_mods_list.setSortingEnabled(True)
-        self.disabled_mods_list.setSortingEnabled(True)
-
-        for mod in mods_db:
-            if mods_db[mod]['Work_status'] == "Enabled":
-                mod_names_dict[mods_db[mod]["mod_name"]] = mod
-                self.enabled_mods_list.addItem(mods_db[mod]['mod_name'])
-            else:
-                mod_names_dict[mods_db[mod]["mod_name"]] = mod
-                self.disabled_mods_list.addItem(mods_db[mod]['mod_name'])
-
-
-
-    def clicked_item_replace(self, item):
-        editor.mod_replace(mod_names_dict[item.text()])
-        self.fill_mods_lists()
-
-
-
-
     def retranslateUi(self, Es_mod_namager_linux):
         _translate = QtCore.QCoreApplication.translate
         Es_mod_namager_linux.setWindowTitle(_translate("Es_mod_namager_linux", "MainWindow"))
@@ -149,6 +112,7 @@ class Ui_Es_mod_namager_linux(object):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Es_mod_namager_linux = QtWidgets.QMainWindow()
     ui = Ui_Es_mod_namager_linux()
