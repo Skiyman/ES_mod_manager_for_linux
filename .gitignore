@@ -4,4 +4,4 @@ __pycache__
 /assets
 /*.zip
 /mods_db.json
-test.py
+/test.py

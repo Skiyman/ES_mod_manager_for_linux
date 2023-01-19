@@ -162,8 +162,6 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
                 self.mod_names_dict[mods_db[mod]["mod_name"]] = mod
                 self.disabled_mods_list.addItem(mods_db[mod]['mod_name'])
 
-        print("update successful")
-
     def run_es(self):
         subprocess.call('steam steam://rungameid/331470', shell=True)
 
