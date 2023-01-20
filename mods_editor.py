@@ -10,14 +10,13 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from bs4 import BeautifulSoup
 
 from GUI import Ui_Es_mod_namager_linux
-from my_settings import mods_folder
 
 class ModsEditor(object):
     def __init__(self):
         self.internet = None
         self.mods_id = None
         self.mods_db = {}
-        self.enabled_mods_folder = mods_folder
+        self.enabled_mods_folder = "mods/"
         self.disabled_mods_folder = "disabled/"
         self.connection_error_name = "Ошибка! Отсутствует подключение к интернету."
 
