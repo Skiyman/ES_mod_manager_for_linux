@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from typing import Dict, Any
 
-# Form implementation generated from reading ui file 'untitled.ui'
+# Form implementation generated from reading ui file 'UI/ES_mod_manager_linux.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -12,84 +11,81 @@ from typing import Dict, Any
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-# from mods_editor import mods_editor
-
-# editor = mods_editor()
-
 class Ui_Es_mod_namager_linux(object):
     def setupUi(self, Es_mod_namager_linux):
         Es_mod_namager_linux.setObjectName("Es_mod_namager_linux")
         Es_mod_namager_linux.resize(560, 600)
-
-        self.centralwidget = QtWidgets.QWidget(Es_mod_namager_linux)
-        self.centralwidget.setObjectName("centralwidget")
-
-        self.btn_Launch_es = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_Launch_es.setGeometry(QtCore.QRect(430, 510, 120, 40))
-        self.btn_Launch_es.setObjectName("btn_Launch_es")
-
-        self.btn_update_mods_db = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_update_mods_db.setGeometry(QtCore.QRect(300, 510, 120, 40))
+        self.main_widget = QtWidgets.QWidget(Es_mod_namager_linux)
+        self.main_widget.setObjectName("main_widget")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.main_widget)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.main_layout = QtWidgets.QVBoxLayout()
+        self.main_layout.setObjectName("main_layout")
+        self.list_view_layout = QtWidgets.QGridLayout()
+        self.list_view_layout.setObjectName("list_view_layout")
+        self.enabled_mods_label = QtWidgets.QLabel(self.main_widget)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.enabled_mods_label.setFont(font)
+        self.enabled_mods_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.enabled_mods_label.setObjectName("enabled_mods_label")
+        self.list_view_layout.addWidget(self.enabled_mods_label, 0, 0, 1, 1)
+        self.disabled_mods_label = QtWidgets.QLabel(self.main_widget)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.disabled_mods_label.setFont(font)
+        self.disabled_mods_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.disabled_mods_label.setObjectName("disabled_mods_label")
+        self.list_view_layout.addWidget(self.disabled_mods_label, 0, 1, 1, 1)
+        self.enabled_mods_list = QtWidgets.QListWidget(self.main_widget)
+        self.enabled_mods_list.setObjectName("enabled_mods_list")
+        self.list_view_layout.addWidget(self.enabled_mods_list, 1, 0, 1, 1)
+        self.disabled_mods_list = QtWidgets.QListWidget(self.main_widget)
+        self.disabled_mods_list.setObjectName("disabled_mods_list")
+        self.list_view_layout.addWidget(self.disabled_mods_list, 1, 1, 1, 1)
+        self.main_layout.addLayout(self.list_view_layout)
+        self.btn_layout = QtWidgets.QHBoxLayout()
+        self.btn_layout.setObjectName("btn_layout")
+        self.btn_enable_all = QtWidgets.QPushButton(self.main_widget)
+        self.btn_enable_all.setObjectName("btn_enable_all")
+        self.btn_layout.addWidget(self.btn_enable_all)
+        self.btn_disable_all = QtWidgets.QPushButton(self.main_widget)
+        self.btn_disable_all.setObjectName("btn_disable_all")
+        self.btn_layout.addWidget(self.btn_disable_all)
+        self.btn_update_mods_db = QtWidgets.QPushButton(self.main_widget)
         self.btn_update_mods_db.setCheckable(False)
         self.btn_update_mods_db.setObjectName("btn_update_mods_db")
-
-        self.enabled_mods_list = QtWidgets.QListWidget(self.centralwidget)
-        self.enabled_mods_list.setGeometry(QtCore.QRect(10, 40, 260, 450))
-        self.enabled_mods_list.setObjectName("enabled_mods_list")
-
-        self.disabled_mods_list = QtWidgets.QListWidget(self.centralwidget)
-        self.disabled_mods_list.setGeometry(QtCore.QRect(290, 40, 260, 450))
-        self.disabled_mods_list.setObjectName("disabled_mods_list")
-
-        self.enabled_mods_label = QtWidgets.QLabel(self.centralwidget)
-        self.enabled_mods_label.setGeometry(QtCore.QRect(10, 10, 261, 31))
-
-        font = QtGui.QFont()
-        font.setPointSize(12)
-
-        self.enabled_mods_label.setFont(font)
-        self.enabled_mods_label.setObjectName("enabled_mods_label")
-
-        self.disabled_mods_label = QtWidgets.QLabel(self.centralwidget)
-        self.disabled_mods_label.setGeometry(QtCore.QRect(290, 10, 261, 31))
-
-        font = QtGui.QFont()
-        font.setPointSize(12)
-
-        self.disabled_mods_label.setFont(font)
-        self.disabled_mods_label.setObjectName("disabled_mods_label")
-
-        Es_mod_namager_linux.setCentralWidget(self.centralwidget)
-
+        self.btn_layout.addWidget(self.btn_update_mods_db)
+        self.btn_Launch_es = QtWidgets.QPushButton(self.main_widget)
+        self.btn_Launch_es.setObjectName("btn_Launch_es")
+        self.btn_layout.addWidget(self.btn_Launch_es)
+        self.btn_layout.setStretch(0, 2)
+        self.btn_layout.setStretch(1, 2)
+        self.btn_layout.setStretch(2, 5)
+        self.btn_layout.setStretch(3, 5)
+        self.main_layout.addLayout(self.btn_layout)
+        self.verticalLayout_2.addLayout(self.main_layout)
+        Es_mod_namager_linux.setCentralWidget(self.main_widget)
         self.menubar = QtWidgets.QMenuBar(Es_mod_namager_linux)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 560, 30))
         self.menubar.setObjectName("menubar")
-
         self.settings_menu = QtWidgets.QMenu(self.menubar)
         self.settings_menu.setObjectName("settings_menu")
-
         self.abbout_menu = QtWidgets.QMenu(self.menubar)
         self.abbout_menu.setObjectName("abbout_menu")
-
         Es_mod_namager_linux.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(Es_mod_namager_linux)
         self.statusbar.setObjectName("statusbar")
         Es_mod_namager_linux.setStatusBar(self.statusbar)
-
         self.mods_path_settings = QtWidgets.QAction(Es_mod_namager_linux)
         self.mods_path_settings.setObjectName("mods_path_settings")
-
         self.abbout_guide = QtWidgets.QAction(Es_mod_namager_linux)
         self.abbout_guide.setObjectName("abbout_guide")
-
         self.abbout_program = QtWidgets.QAction(Es_mod_namager_linux)
         self.abbout_program.setObjectName("abbout_program")
-
         self.settings_menu.addAction(self.mods_path_settings)
-
         self.abbout_menu.addAction(self.abbout_guide)
         self.abbout_menu.addAction(self.abbout_program)
-
         self.menubar.addAction(self.settings_menu.menuAction())
         self.menubar.addAction(self.abbout_menu.menuAction())
 
@@ -99,10 +95,12 @@ class Ui_Es_mod_namager_linux(object):
     def retranslateUi(self, Es_mod_namager_linux):
         _translate = QtCore.QCoreApplication.translate
         Es_mod_namager_linux.setWindowTitle(_translate("Es_mod_namager_linux", "MainWindow"))
-        self.btn_Launch_es.setText(_translate("Es_mod_namager_linux", "Launch ES"))
-        self.btn_update_mods_db.setText(_translate("Es_mod_namager_linux", "Update mods db"))
-        self.enabled_mods_label.setText(_translate("Es_mod_namager_linux", "Enabled mods"))
-        self.disabled_mods_label.setText(_translate("Es_mod_namager_linux", "Disabled mods"))
+        self.enabled_mods_label.setText(_translate("Es_mod_namager_linux", "Включенные моды"))
+        self.disabled_mods_label.setText(_translate("Es_mod_namager_linux", "Выключенные моды"))
+        self.btn_enable_all.setText(_translate("Es_mod_namager_linux", "Включить все"))
+        self.btn_disable_all.setText(_translate("Es_mod_namager_linux", "Выключить все"))
+        self.btn_update_mods_db.setText(_translate("Es_mod_namager_linux", "Обновить БД модов"))
+        self.btn_Launch_es.setText(_translate("Es_mod_namager_linux", "Запустить БЛ"))
         self.settings_menu.setTitle(_translate("Es_mod_namager_linux", "Настройки"))
         self.abbout_menu.setTitle(_translate("Es_mod_namager_linux", "Справка"))
         self.mods_path_settings.setText(_translate("Es_mod_namager_linux", "Пути"))
@@ -112,7 +110,6 @@ class Ui_Es_mod_namager_linux(object):
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     Es_mod_namager_linux = QtWidgets.QMainWindow()
     ui = Ui_Es_mod_namager_linux()

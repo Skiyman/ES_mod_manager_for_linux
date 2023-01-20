@@ -4,4 +4,6 @@ __pycache__
 /assets
 /*.zip
 /mods_db.json
-/test.py
+/tetst.py
+/my_settings.py
+/UI
