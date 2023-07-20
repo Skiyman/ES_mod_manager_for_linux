@@ -1,9 +1,4 @@
 __pycache__
-/mods
-/disabled
-/assets
 /*.zip
-/mods_db.json
-/tetst.py
+/src/settings/mods_db.json
 /my_settings.py
-/UI
