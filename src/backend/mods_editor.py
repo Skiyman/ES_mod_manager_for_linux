@@ -1,8 +1,8 @@
 import json
+import os.path
 import shutil
 import subprocess
 import time
-import asyncio
 from threading import Thread
 
 import psutil
@@ -13,20 +13,12 @@ from src.backend.parser import Parser
 class ModsEditor(object):
     def __init__(self):
         self.parser = None
-        self.enabled_mods_folder = None
-        self.disabled_mods_folder = None
+        self.enabled_mods_folder = ""
+        self.disabled_mods_folder = ""
 
         self.mods_db = {}
         self.settings = {}
         self.config_editor()
-
-    def config_editor(self):
-        self.settings = self.get_settings()
-        self.enabled_mods_folder = self.settings['enabled_mods_folder']
-        self.disabled_mods_folder = self.settings['disabled_mods_folder']
-
-        self.parser = Parser(enabled=self.enabled_mods_folder, disabled=self.disabled_mods_folder)
-        self.mods_db = self.parser.get_mods_db()
 
     @staticmethod
     def get_settings():
@@ -35,83 +27,79 @@ class ModsEditor(object):
 
         return settings
 
-    def delete_mod(self, mod_id):
-        with open("src/settings/mods_db.json", "r+") as file:
-            self.mods_db = json.load(file)
-            del self.mods_db[mod_id]
-
-            file.seek(0)
-            json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
-            file.truncate()
-
-    def change_mod_status(self, mod_id):
-        with open("src/settings/mods_db.json", "r+") as file:
-            self.mods_db = json.load(file)
-            if self.mods_db[str(mod_id)]["status"] == "enabled":
-                self.mods_db[str(mod_id)]["status"] = "disabled"
-            else:
-                self.mods_db[str(mod_id)]["status"] = "enabled"
-            file.seek(0)
-            json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
-            file.truncate()
-
-        return self.mods_db
-
-    def mod_replace(self, mod_id):
-        if self.mods_db[mod_id]["status"] == "enabled":
-            try:
-                shutil.move(self.enabled_mods_folder + mod_id, self.disabled_mods_folder)
-                self.mods_db = self.change_mod_status(mod_id)
-            # except shutil.Error:
-            #     pass  # Нужно будет добавить описание ошибки
-            except FileNotFoundError:
-                self.delete_mod(mod_id)
-
-        elif self.mods_db[mod_id]["status"] == "disabled":
-            try:
-                shutil.move(self.disabled_mods_folder + mod_id, self.enabled_mods_folder)
-                self.mods_db = self.change_mod_status(mod_id)
-
-            except shutil.Error:
-                pass  # То же самое
-            except FileNotFoundError:
-                self.delete_mod(mod_id)
-
     @staticmethod
-    def get_es_pid():
-        es_pid = None
-        # Лучше проверять наличие сразу тут, чтобы не ебаться ниже
-        for process in psutil.process_iter(['pid', 'name']):
-            if 'Everlasting Sum' in process.name():
-                es_pid = process.pid
+    def get_process_pid(pid_name: str):
+        pid = None
 
-        return es_pid
+        for process in psutil.process_iter(['pid', 'name']):
+            if pid_name in process.name():
+                pid = process.pid
+
+        return pid
+
+    def config_editor(self):
+        self.settings = self.get_settings()
+
+        self.enabled_mods_folder = self.settings['enabled_mods_folder']
+        self.disabled_mods_folder = self.settings['disabled_mods_folder']
+
+        self.parser = Parser(enabled=self.enabled_mods_folder, disabled=self.disabled_mods_folder)
+        self.mods_db = self.parser.get_mods_db()
+
+    def mod_switcher(self, mod_id):
+        if self.settings["mod_move_method"] == 'before':
+            self.mods_db = self.parser.change_mod_status(mod_id)
+        elif self.settings["mod_move_method"] == 'on_click':
+            self.mods_db = self.parser.change_mod_status(mod_id)
+            self.mod_replace(mod_id, self.mods_db[mod_id]['status'])
+
+    def mod_replace(self, mod_id, destination="enabled"):
+        if destination == "disabled":
+            self.replace_folder(mod_id, self.enabled_mods_folder, self.disabled_mods_folder)
+
+        elif destination == "enabled":
+            self.replace_folder(mod_id, self.disabled_mods_folder, self.enabled_mods_folder)
+
+    def replace_folder(self, mod_id, current_folder, destination_folder):
+        try:
+            shutil.move(current_folder + mod_id, destination_folder)
+        except shutil.Error:
+            print("Мод уже перемещен")
+        except FileNotFoundError:
+            if not os.path.exists(destination_folder + mod_id):
+                self.parser.delete_mod(mod_id)
+
+    def replace_all_mods(self, mode='off'):
+        if mode == 'off':
+            for mod_id in self.mods_db:
+                if self.mods_db[mod_id]['status'] == 'disabled':
+                    self.mod_replace(mod_id, destination="disabled")
+        elif mode == "on":
+            disabled_mods = os.listdir(self.disabled_mods_folder)
+            for mod_id in disabled_mods:
+                self.mod_replace(mod_id, destination='enabled')
 
     def check_es_process(self):
-        time.sleep(10)
-        print("start")
+        es_pid = None
+        operation_count = 0
 
-        es_pid = self.get_es_pid()
+        while es_pid is None or operation_count < 10:
+            es_pid = self.get_process_pid(self.settings['es_process_name'])
+            operation_count += 1
+            time.sleep(5)
 
         if es_pid is not None:
-            # Сюда надо добавить функцию для перемещения модов
             while psutil.pid_exists(es_pid):
-                # Цикл будет жить, пока существует процесс бл. Т.к. он работает в отдельном потоке,
-                # то и приложение ложиться не будет
-                try:
-                    if psutil.pid_exists(es_pid):
-                        print('Still working')
-                except TypeError:
-                    print(es_pid)
-                    continue
                 time.sleep(1)
 
+        self.replace_all_mods(mode='on')
+
     def run_es(self):
+        if self.settings['mod_move_method'] == 'before':
+            self.replace_all_mods()
+
         subprocess.run('steam steam://rungameid/331470 %U', shell=True, check=True)
 
-        es_checker = Thread(target=self.check_es_process)
-        es_checker.start()
-
-
-if __name__ == "__main__":
-    editor = ModsEditor()
+        if self.settings['mod_move_method'] == 'before':
+            es_checker = Thread(target=self.check_es_process)
+            es_checker.start()
