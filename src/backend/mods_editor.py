@@ -22,7 +22,7 @@ class ModsEditor(object):
 
     @staticmethod
     def get_settings():
-        with open('src/settings/settings.json', 'r') as file:
+        with open('src/settings/config.json', 'r') as file:
             settings = json.load(file)
 
         return settings
@@ -47,9 +47,9 @@ class ModsEditor(object):
         self.mods_db = self.parser.get_mods_db()
 
     def mod_switcher(self, mod_id):
-        if self.settings["mod_move_method"] == 'before':
+        if self.settings["mod_move_method"] == 'before_game_launch':
             self.mods_db = self.parser.change_mod_status(mod_id)
-        elif self.settings["mod_move_method"] == 'on_click':
+        elif self.settings["mod_move_method"] == 'on_switch':
             self.mods_db = self.parser.change_mod_status(mod_id)
             self.mod_replace(mod_id, self.mods_db[mod_id]['status'])
 
@@ -83,23 +83,24 @@ class ModsEditor(object):
         es_pid = None
         operation_count = 0
 
-        while es_pid is None or operation_count < 10:
+        while es_pid is None and operation_count < 10:
             es_pid = self.get_process_pid(self.settings['es_process_name'])
             operation_count += 1
-            time.sleep(5)
+            time.sleep(2)
 
         if es_pid is not None:
+            print('Начинаю смотреть')
             while psutil.pid_exists(es_pid):
                 time.sleep(1)
-
+        print("Возвращаю обратно")
         self.replace_all_mods(mode='on')
 
     def run_es(self):
-        if self.settings['mod_move_method'] == 'before':
+        if self.settings['mod_move_method'] == 'before_game_launch':
             self.replace_all_mods()
 
         subprocess.run('steam steam://rungameid/331470 %U', shell=True, check=True)
 
-        if self.settings['mod_move_method'] == 'before':
+        if self.settings['mod_move_method'] == 'before_game_launch':
             es_checker = Thread(target=self.check_es_process)
             es_checker.start()

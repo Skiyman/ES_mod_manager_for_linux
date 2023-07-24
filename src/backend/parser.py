@@ -101,6 +101,7 @@ class Parser:
 
     def delete_mod(self, mod_id):
         with open("src/settings/mods_db.json", "r+") as file:
+
             self.mods_db = json.load(file)
             del self.mods_db[mod_id]
 
