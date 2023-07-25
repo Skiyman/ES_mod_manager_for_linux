@@ -56,6 +56,7 @@ class GreetingWindow(Ui_Dialog, QDialog):
         config = CONFIG_TEMPLATE
         config["enabled_mods_folder"] = self.enable_folder
         config["disabled_mods_folder"] = self.disable_folder
+        config["first_launch"] = False
 
         with open("src/settings/config.json", "w") as file:
             json.dump(config, file, indent=4, ensure_ascii=False)
