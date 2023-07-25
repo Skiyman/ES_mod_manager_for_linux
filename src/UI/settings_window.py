@@ -1,4 +1,5 @@
 import json
+
 from src.backend.consts import config_template
 
 from pathlib import Path
@@ -10,10 +11,11 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 
 class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self, window):
         super().__init__()
         self.setupUi(self)
 
+        self.main_window = window
         self.config = self.get_settings()
         self.setup_fields()
 
@@ -69,6 +71,8 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
             self.config[setting] = option
             json.dump(self.config, file, indent=4, ensure_ascii=False)
             file.truncate()
+
+        self.main_window.update_config(config=self.config)
 
         return self.config
 

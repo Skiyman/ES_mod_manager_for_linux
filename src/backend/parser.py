@@ -5,6 +5,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
+from src.UI.settings_window import SettingsWindow
 from src.backend.consts import HEADERS
 
 
@@ -128,4 +129,3 @@ class Parser:
 if __name__ == "__main__":
     enabled_mods_folder = '/home/skiyman/.steam/debian-installation/steamapps/workshop/content/331470/'
     disabled_mods_folder = "../../disabled"
-    parser = Parser(enabled=enabled_mods_folder, disabled=disabled_mods_folder)

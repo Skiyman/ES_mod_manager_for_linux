@@ -12,13 +12,14 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
         super().__init__()
         self.setupUi(self)
 
-        self.settings_window = SettingsWindow()
-        self.editor = ModsEditor()
-        self.settings = self.editor.get_settings()
+        self.settings_window = SettingsWindow(self)
+        self.config = SettingsWindow.get_settings()
 
-        self.parser = Parser(self.settings['enabled_mods_folder'], self.settings['disabled_mods_folder'])
+        self.editor = ModsEditor(self.config)
+        self.parser = Parser(self.config['enabled_mods_folder'], self.config['disabled_mods_folder'])
 
-        if self.settings["when_update"] == "on_launch":
+
+        if self.config["when_update"] == "on_launch":
             self.parser.fill_mods_db()
 
         self.mod_names_dict = {}
@@ -34,7 +35,6 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
         self.settings_menu.triggered.connect(self.open_settings_menu)
 
     def open_settings_menu(self):
-        print("Открыл")
         self.settings_window.show()
 
     def clicked_item_replace(self, item):
@@ -79,3 +79,14 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
             else:
                 self.mod_names_dict[mods_db[mod]["name"]] = mod
                 self.disabled_mods_list.addItem(mods_db[mod]['name'])
+
+    def update_config(self, config: dict):
+        self.config = config
+
+        self.editor.config = config
+        self.editor.enabled_mods_folder = self.config['enabled_mods_folder']
+        self.editor.disabled_mods_folder = self.config['disabled_mods_folder']
+        self.editor.update_mod_move_method()
+
+        self.parser.enabled_mods_folder = self.config['enabled_mods_folder']
+        self.parser.disabled_mods_folder = self.config['disabled_mods_folder']
