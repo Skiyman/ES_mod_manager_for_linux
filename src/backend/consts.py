@@ -3,10 +3,14 @@ HEADERS = {
                   'Chrome/101.0.4951.67 Safari/537.36'
 }
 
-config_template = {
+CONFIG_TEMPLATE = {
     "enabled_mods_folder": "",
     "disabled_mods_folder": "",
     "es_process_name": "Everlasting Sum",
-    "mod_move_method": "before_game_launch",
-    "when_update": "on_launch"
+    "move_mods_before_launch_game": True,
+    "update_on_launch": True,
+    "first_launch": True
 }
+
+STEAM_PATH = "/.steam/steam/steamapps/workshop/content/331470/"
+DISABLED_PATH_TEMPLATE = "/disabled/"

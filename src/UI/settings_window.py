@@ -1,13 +1,10 @@
 import json
-
-from src.backend.consts import config_template
-
 from pathlib import Path
 
+from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFileDialog
 
-from src.UI.settingsWindow_qt import Ui_SettingsWindow
-from PySide6 import QtCore, QtGui, QtWidgets
+from src.UI.qtClass.settingsWindow_qt import Ui_SettingsWindow
 
 
 class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
@@ -36,9 +33,8 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
 
             return config
         except FileNotFoundError:
-            with open("src/settings/config.json", "w") as file:
-                json.dump(config_template, file, indent=4, ensure_ascii=False)
-                file.truncate()
+            print("Ошибка! Файл конфигурации не был найден. Переустановите приложение.")
+            return {}
 
     def select_folder(self, folder):
         dir_name = QFileDialog.getExistingDirectory(self, "Выберите папку")
@@ -53,20 +49,20 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
                 self.disabel_folder_name.setText(str(path))
 
     def setup_fields(self):
-        if self.config["mod_move_method"] == "before_game_launch":
+        if self.config["move_mods_before_launch_game"]:
             self.before_game_start_rb.setChecked(True)
-        elif self.config["mod_move_method"] == "on_switch":
+        elif not self.config["move_mods_before_launch_game"]:
             self.on_switch_rb.setChecked(True)
 
-        if self.config["when_update"] == "on_launch":
+        if self.config["update_on_launch"]:
             self.on_launch_update_rb.setChecked(True)
-        elif self.config["when_update"] == "on_click":
+        elif not self.config["update_on_launch"]:
             self.on_button_click_rb.setChecked(True)
 
         self.enabel_folder_name.setText(self.config["enabled_mods_folder"])
         self.disabel_folder_name.setText(self.config["disabled_mods_folder"])
 
-    def change_settings(self, setting: str, option: str):
+    def change_settings(self, setting: str, option):
         with open("src/settings/config.json", 'w') as file:
             self.config[setting] = option
             json.dump(self.config, file, indent=4, ensure_ascii=False)
@@ -78,12 +74,12 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
 
     def change_mod_move_method(self):
         if self.before_game_start_rb.isChecked():
-            self.change_settings(setting="mod_move_method", option="before_game_launch")
+            self.change_settings(setting="move_mods_before_launch_game", option=True)
         elif self.on_switch_rb.isChecked():
-            self.change_settings(setting="mod_move_method", option="on_switch")
+            self.change_settings(setting="move_mods_before_launch_game", option=False)
 
     def change_update_method(self):
         if self.on_button_click_rb.isChecked():
-            self.change_settings(setting="when_update", option="on_click")
+            self.change_settings(setting="update_on_launch", option=False)
         elif self.on_launch_update_rb.isChecked():
-            self.change_settings(setting="when_update", option="on_launch")
+            self.change_settings(setting="update_on_launch", option=True)

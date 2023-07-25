@@ -60,7 +60,6 @@ class Parser:
             "status": "enabled"
         }
         self.mods_db[mod_id] = mod_data
-        print(f"[INFO]Получен мод: {mod_name}")
 
         return mod_data
 
@@ -110,7 +109,7 @@ class Parser:
                 self.mods_db = json.load(file)
 
             return self.mods_db
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             with open('src/settings/mods_db.json', 'w') as file:
                 json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
                 file.truncate()

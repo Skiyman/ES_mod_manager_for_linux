@@ -1,7 +1,10 @@
+import os.path
+
 from PySide6.QtWidgets import QMainWindow
 
-from src.UI.MainWindow_qt import Ui_Es_mod_namager_linux
+from src.UI.qtClass.MainWindow_qt import Ui_Es_mod_namager_linux
 from src.UI.settings_window import SettingsWindow
+from src.UI.greeting_window import GreetingWindow
 from src.backend.mods_editor import ModsEditor
 from src.backend.parser import Parser
 from src.backend.qt_threads import ProcessCheckerThread, ModsMoverThread, ParseThread
@@ -19,15 +22,20 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
 
         self.settings_window = SettingsWindow(self)
         self.config = SettingsWindow.get_settings()
+
+        self.greeting_window = GreetingWindow()
+
         self.parser = Parser(self.config['enabled_mods_folder'], self.config['disabled_mods_folder'])
         self.editor = ModsEditor(self.config)
 
-        if self.config["when_update"] == "on_launch":
+        if self.config["update_on_launch"]:
             self.update_mod_db()
 
         self.mod_names_dict = self.parser.get_mods_db()
+        self.connect_buttons()
         self.fill_mods_lists()
 
+    def connect_buttons(self):
         self.btn_update_mods_db.clicked.connect(self.update_mod_db)
         self.enabled_mods_list.itemDoubleClicked.connect(self.clicked_item_replace)
         self.disabled_mods_list.itemDoubleClicked.connect(self.clicked_item_replace)
@@ -97,7 +105,7 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
                 self.disabled_mods_list.addItem(mods_db[mod]['name'])
 
     def launch_game(self):
-        if self.config["mod_move_method"] == "before_game_launch":
+        if self.config["move_mods_before_launch_game"]:
             self.btn_Launch_es.setEnabled(False)
 
             self.editor.replace_all_mods(mode="off")
@@ -107,7 +115,7 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
             self.process_checker.finished.connect(lambda: self.btn_Launch_es.setEnabled(True))
 
             self.process_checker.start()
-        elif self.config["mod_move_method"] == "on_switch":
+        elif not self.config["move_mods_before_launch_game"]:
             ProcessCheckerThread.run_es()
 
     def update_config(self, config: dict):

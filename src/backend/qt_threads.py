@@ -22,9 +22,9 @@ class ProcessCheckerThread(QThread):
 
         if es_pid is not None:
             while psutil.pid_exists(es_pid):
-                time.sleep(1)
+                time.sleep(0.5)
 
-            self.main_window.editor.replace_all_mods(mode='on')
+        self.main_window.editor.replace_all_mods(mode='on')
 
     @staticmethod
     def run_es():
