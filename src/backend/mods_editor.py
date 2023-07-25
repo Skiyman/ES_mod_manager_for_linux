@@ -21,16 +21,6 @@ class ModsEditor(object):
 
         self.config_editor()
 
-    @staticmethod
-    def get_process_pid(pid_name: str):
-        pid = None
-
-        for process in psutil.process_iter(['pid', 'name']):
-            if pid_name in process.name():
-                pid = process.pid
-
-        return pid
-
     def update_mod_move_method(self):
         if self.config["mod_move_method"] == "on_switch":
             for mod_id in self.mods_db:
@@ -85,29 +75,4 @@ class ModsEditor(object):
             for mod_id in disabled_mods:
                 self.mod_replace(mod_id, destination='enabled')
 
-    def check_es_process(self):
-        es_pid = None
-        operation_count = 0
 
-        while es_pid is None and operation_count < 20:
-            es_pid = self.get_process_pid(self.config['es_process_name'])
-            operation_count += 1
-            time.sleep(2)
-
-        if es_pid is not None:
-            while psutil.pid_exists(es_pid):
-                time.sleep(1)
-
-        self.replace_all_mods(mode='on')
-
-    def run_es(self):
-        self.config = SettingsWindow.get_settings()
-
-        if self.config['mod_move_method'] == 'before_game_launch':
-            self.replace_all_mods()
-
-        subprocess.run('steam steam://rungameid/331470 %U', shell=True, check=True)
-
-        if self.config['mod_move_method'] == 'before_game_launch':
-            es_checker = Thread(target=self.check_es_process)
-            es_checker.start()

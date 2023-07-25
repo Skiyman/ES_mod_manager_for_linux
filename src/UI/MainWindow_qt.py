@@ -118,6 +118,11 @@ class Ui_Es_mod_namager_linux(object):
         Es_mod_namager_linux.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(Es_mod_namager_linux)
         self.statusbar.setObjectName(u"statusbar")
+        font1 = QFont()
+        font1.setPointSize(11)
+        font1.setBold(False)
+        self.statusbar.setFont(font1)
+        self.statusbar.setSizeGripEnabled(True)
         Es_mod_namager_linux.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.settings_menu.menuAction())
