@@ -7,7 +7,6 @@ from PyQt5 import QtGui
 from UI.greeting_window import GreetingWindow
 from UI.main_window import MainWindow
 from UI.settings_window import SettingsWindow
-from backend.consts import CONFIG_TEMPLATE
 
 
 def main():

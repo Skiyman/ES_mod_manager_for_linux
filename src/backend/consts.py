@@ -13,4 +13,4 @@ CONFIG_TEMPLATE = {
 }
 
 STEAM_PATH = "/.steam/steam/steamapps/workshop/content/331470/"
-DISABLED_PATH_TEMPLATE = "/disabled/"
+DISABLED_PATH_TEMPLATE = "/ESModManager_disabled/"

@@ -1,13 +1,12 @@
+import asyncio
 import json
 import os
 import time
-import asyncio
+
 import aiohttp
-
 import requests
-from bs4 import BeautifulSoup
-
 from backend.consts import HEADERS
+from bs4 import BeautifulSoup
 
 
 class Parser:
@@ -19,6 +18,9 @@ class Parser:
         self.enabled_mods_folder = enabled
         self.disabled_mods_folder = disabled
 
+        home_directory = os.path.expanduser('~')
+        self.mods_db_path = home_directory + "/.config/esmodmanager/mods_db.json"
+        
         self.mods_db = self.get_mods_db()
 
     def get_mods_id_list(self):
@@ -95,7 +97,7 @@ class Parser:
         self.find_removed_mods()
 
         if self.mods_db:
-            with open("mods_db.json", 'w') as file:
+            with open(self.mods_db_path, 'w') as file:
                 json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
                 file.truncate()
 
@@ -105,17 +107,17 @@ class Parser:
 
     def get_mods_db(self):
         try:
-            with open('mods_db.json', 'r') as file:
+            with open(self.mods_db_path, 'r') as file:
                 self.mods_db = json.load(file)
 
             return self.mods_db
         except (FileNotFoundError, json.JSONDecodeError):
-            with open('mods_db.json', 'w') as file:
+            with open(self.mods_db_path, 'w') as file:
                 json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
                 file.truncate()
 
     def delete_mod(self, mod_id):
-        with open("mods_db.json", "r+") as file:
+        with open(self.mods_db_path, "r+") as file:
             self.mods_db = json.load(file)
             del self.mods_db[mod_id]
 
@@ -124,7 +126,7 @@ class Parser:
             file.truncate()
 
     def change_mod_status(self, mod_id):
-        with open("mods_db.json", "r+") as file:
+        with open(self.mods_db_path, "r+") as file:
             self.mods_db = json.load(file)
             if mod_id in self.mods_db:
                 if self.mods_db[str(mod_id)]["status"] == "enabled":

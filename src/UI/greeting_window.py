@@ -27,7 +27,7 @@ class GreetingWindow(Ui_Dialog, QDialog):
 
     def create_path(self):
         steam_directory = self.home_directory + STEAM_PATH
-        disabled_folder_path = "/opt/esmodmanager" + DISABLED_PATH_TEMPLATE
+        disabled_folder_path = self.home_directory + DISABLED_PATH_TEMPLATE
 
         if os.path.exists(steam_directory):
             self.enable_folder_name.setText(steam_directory)
@@ -58,9 +58,10 @@ class GreetingWindow(Ui_Dialog, QDialog):
         config["first_launch"] = False
 
         working_directory = os.getcwd()
-        disabled_folder_path = working_directory + DISABLED_PATH_TEMPLATE
-        if disabled_folder_path == self.disable_folder and not os.path.exists(disabled_folder_path):
-            os.mkdir("disabled")
+        disabled_folder_path = self.home_directory + DISABLED_PATH_TEMPLATE
+
+        if disabled_folder_path == self.disable_folder:
+            Path(disabled_folder_path).mkdir(parents=True, exist_ok=True)
 
         Path(self.home_directory + "/.config/esmodmanager").mkdir(parents=True, exist_ok=True)
 
