@@ -1,10 +1,12 @@
 import json
+import os
 from pathlib import Path
 
-from PySide6 import QtWidgets
-from PySide6.QtWidgets import QFileDialog
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QFileDialog
 
-from src.UI.qtClass.settingsWindow_qt import Ui_SettingsWindow
+from UI.qtClass.settingsWindow_qt import Ui_SettingsWindow
+from backend.consts import CONFIG_TEMPLATE
 
 
 class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
@@ -13,7 +15,11 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
         self.setupUi(self)
 
         self.main_window = window
+
+        home_directory = os.path.expanduser('~')
+        self.config_path = home_directory + "/.config/esmodmanager/config.json"
         self.config = self.get_settings()
+
         self.setup_fields()
 
         self.before_game_start_rb.clicked.connect(self.change_mod_move_method)
@@ -27,14 +33,16 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
 
     @staticmethod
     def get_settings():
+        home_directory = os.path.expanduser('~')
+        config_path = home_directory + "/.config/esmodmanager/config.json"
+
         try:
-            with open("src/settings/config.json", 'r') as file:
+            with open(config_path, 'r') as file:
                 config = json.load(file)
 
             return config
         except FileNotFoundError:
-            print("Ошибка! Файл конфигурации не был найден. Переустановите приложение.")
-            return {}
+            return CONFIG_TEMPLATE
 
     def select_folder(self, folder):
         dir_name = QFileDialog.getExistingDirectory(self, "Выберите папку")
@@ -63,7 +71,7 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
         self.disabel_folder_name.setText(self.config["disabled_mods_folder"])
 
     def change_settings(self, setting: str, option):
-        with open("src/settings/config.json", 'w') as file:
+        with open(self.config_path, 'w') as file:
             self.config[setting] = option
             json.dump(self.config, file, indent=4, ensure_ascii=False)
             file.truncate()

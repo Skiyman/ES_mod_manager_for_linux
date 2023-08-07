@@ -1,13 +1,11 @@
-import os.path
+from PyQt5.QtWidgets import QMainWindow
 
-from PySide6.QtWidgets import QMainWindow
-
-from src.UI.qtClass.MainWindow_qt import Ui_Es_mod_namager_linux
-from src.UI.settings_window import SettingsWindow
-from src.UI.greeting_window import GreetingWindow
-from src.backend.mods_editor import ModsEditor
-from src.backend.parser import Parser
-from src.backend.qt_threads import ProcessCheckerThread, ModsMoverThread, ParseThread
+from UI.greeting_window import GreetingWindow
+from UI.qtClass.MainWindow_qt import Ui_Es_mod_namager_linux
+from UI.settings_window import SettingsWindow
+from backend.mods_editor import ModsEditor
+from backend.parser import Parser
+from backend.qt_threads import ProcessCheckerThread, ModsMoverThread, ParseThread
 
 
 class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
@@ -15,7 +13,6 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
 
         super().__init__()
         self.setupUi(self)
-
         self.process_checker = None
         self.mods_move_thread = None
         self.parse_thread = None

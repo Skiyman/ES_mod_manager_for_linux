@@ -1,7 +1,7 @@
 import subprocess
 import time
 import psutil
-from PySide6.QtCore import QThread
+from PyQt5.QtCore import QThread
 
 
 class ProcessCheckerThread(QThread):

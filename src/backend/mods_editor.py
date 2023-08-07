@@ -1,13 +1,7 @@
 import os.path
 import shutil
-import subprocess
-import time
-from threading import Thread
-from src.UI.settings_window import SettingsWindow
 
-import psutil
-
-from src.backend.parser import Parser
+from backend.parser import Parser
 
 
 class ModsEditor(object):
@@ -60,8 +54,6 @@ class ModsEditor(object):
         except shutil.Error:
             pass
         except FileNotFoundError:
-            print(current_folder, destination_folder)
-            print("Ошибка")
             if not os.path.exists(destination_folder + mod_id):
                 self.parser.delete_mod(mod_id)
 

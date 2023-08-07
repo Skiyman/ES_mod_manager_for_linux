@@ -7,7 +7,7 @@ import aiohttp
 import requests
 from bs4 import BeautifulSoup
 
-from src.backend.consts import HEADERS
+from backend.consts import HEADERS
 
 
 class Parser:
@@ -95,7 +95,7 @@ class Parser:
         self.find_removed_mods()
 
         if self.mods_db:
-            with open("src/settings/mods_db.json", 'w') as file:
+            with open("mods_db.json", 'w') as file:
                 json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
                 file.truncate()
 
@@ -105,17 +105,17 @@ class Parser:
 
     def get_mods_db(self):
         try:
-            with open('src/settings/mods_db.json', 'r') as file:
+            with open('mods_db.json', 'r') as file:
                 self.mods_db = json.load(file)
 
             return self.mods_db
         except (FileNotFoundError, json.JSONDecodeError):
-            with open('src/settings/mods_db.json', 'w') as file:
+            with open('mods_db.json', 'w') as file:
                 json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
                 file.truncate()
 
     def delete_mod(self, mod_id):
-        with open("src/settings/mods_db.json", "r+") as file:
+        with open("mods_db.json", "r+") as file:
             self.mods_db = json.load(file)
             del self.mods_db[mod_id]
 
@@ -124,7 +124,7 @@ class Parser:
             file.truncate()
 
     def change_mod_status(self, mod_id):
-        with open("src/settings/mods_db.json", "r+") as file:
+        with open("mods_db.json", "r+") as file:
             self.mods_db = json.load(file)
             if mod_id in self.mods_db:
                 if self.mods_db[str(mod_id)]["status"] == "enabled":
