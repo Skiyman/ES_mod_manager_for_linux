@@ -5,6 +5,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/Skiyman/ES_mod_manager_for_linux)
 ![GitHub all releases](https://img.shields.io/github/downloads/Skiyman/ES_mod_manager_for_linux/total)
 
+
 Оконное приложение для упрощения запуска визуальной новеллы "Бесконечное лето". Написанное для ОС на базе GNU/Linux
 
 [💿 **Скачать deb пакет**](https://github.com/Skiyman/ES_mod_manager_for_linux/releases/download/v0.1/esmodmanager_0.1-1_amd64.deb)
@@ -19,7 +20,7 @@
 -------------
 **Debian, Ubuntu 22.04-23.04**:
 
-Необходимо скачать .deb пакет, открыть папку с пакетом в терминале и выполнить команду:
+Необходимо скачать [.deb пакет](https://github.com/Skiyman/ES_mod_manager_for_linux/releases/download/v0.1/esmodmanager_0.1-1_amd64.deb), открыть папку с пакетом в терминале и выполнить команду:
 ```shell
 sudo apt install ./esmodmanager_0.1-1_amd64.deb 
 ```
