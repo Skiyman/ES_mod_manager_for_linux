@@ -1,7 +1,7 @@
 
 <img src="src/assets/logo.png" alt="drawing" width="63"/> ESModManager
 =====================
-![Last release](https://img.shields.io/github/v/release/Skiyman/ES_mod_manager_for_linux)
+![release](https://img.shields.io/github/v/release/Skiyman/ES_mod_manager_for_linux)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Skiyman/ES_mod_manager_for_linux)
 ![GitHub all releases](https://img.shields.io/github/downloads/Skiyman/ES_mod_manager_for_linux/total)
 
