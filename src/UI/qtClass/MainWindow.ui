@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Es_mod_namager_linux</class>
+ <widget class="QMainWindow" name="Es_mod_namager_linux">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>615</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ES mod manager for Linux</string>
+  </property>
+  <widget class="QWidget" name="main_widget">
+   <property name="minimumSize">
+    <size>
+     <width>560</width>
+     <height>547</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>8</number>
+    </property>
+    <property name="bottomMargin">
+     <number>8</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="main_layout">
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QGridLayout" name="list_view_layout">
+        <property name="bottomMargin">
+         <number>8</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="enabled_mods_label">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Включенные моды</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="disabled_mods_label">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Выключенные моды</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QListWidget" name="enabled_mods_list"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QListWidget" name="disabled_mods_list"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="btn_layout" stretch="2,2,0,5">
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="btn_enable_all">
+          <property name="text">
+           <string>Включить все</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_disable_all">
+          <property name="text">
+           <string>Выключить все</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_update_mods_db">
+          <property name="text">
+           <string>Обновить cписок модов</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_Launch_es">
+          <property name="text">
+           <string>Запустить БЛ</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>560</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="settings_menu">
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <addaction name="mods_path_settings"/>
+   </widget>
+   <addaction name="settings_menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="sizeGripEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <action name="mods_path_settings">
+   <property name="text">
+    <string>Настройки...</string>
+   </property>
+  </action>
+  <action name="abbout_guide">
+   <property name="text">
+    <string>Справка по использованию</string>
+   </property>
+  </action>
+  <action name="abbout_program">
+   <property name="text">
+    <string>О мненджере</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

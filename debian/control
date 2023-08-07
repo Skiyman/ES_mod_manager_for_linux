@@ -1,0 +1,18 @@
+Source: esmodmanager
+Section: games
+Priority: optional
+Maintainer: Skiyman <skiyman@yandex.ru>
+Build-Depends:
+ debhelper-compat (= 13), python3-pip, python3, make
+Standards-Version: 4.6.2
+Homepage: https://github.com/Skiyman/ES_mod_manager_for_linux
+
+Package: esmodmanager
+Architecture: any
+Depends:
+ ${shlibs:Depends}, ${misc:Depends}, python3 (>= 3.10), python3-aiohttp, python3-bs4,
+ python3-lxml, python3-psutil, python3-requests, python3-pyqt5
+Description:
+ Open-source application for help launch the visual novel "Everlasting summer".
+ .
+ This application can move mods, to another folder to avoid errors caused by a large number of mods.

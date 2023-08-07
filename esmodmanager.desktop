@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=0.1
+Type=Application
+Name=ESModManager
+Comment=Mod manager for visual nover "Everlasting Summer"
+Icon=/opt/esmodmanager/assets/logo.png
+Exec=/usr/bin/esmodmanager
+Actions=
+Categories=Game;
