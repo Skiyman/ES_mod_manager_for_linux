@@ -8,7 +8,7 @@
 
 Desktop application for easier launch visual novel "Everlasting summer". Built for OS based on GNU/Linux
 
-[💿 **Скачать deb пакет**](https://github.com/Skiyman/ES_mod_manager_for_linux/releases/download/v0.1/esmodmanager_0.1-1_amd64.deb)
+[💿 **Download deb package**](https://github.com/Skiyman/ES_mod_manager_for_linux/releases/download/v0.1/esmodmanager_0.1-1_amd64.deb)
 
 ### Verified distributive:
 - [x] Debian 12 «Bookworm»
