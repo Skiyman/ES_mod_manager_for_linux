@@ -20,7 +20,7 @@
 -------------
 **Debian, Ubuntu 22.04-23.04**:
 
-Необходимо скачать [.deb пакет](https://github.com/Skiyman/ES_mod_manager_for_linux/releases/download/v0.1/esmodmanager_0.1-1_amd64.deb), открыть папку с пакетом в терминале и выполнить команду:
+Необходимо скачать [.deb пакет](https://github.com/Skiyman/ES_mod_manager_for_linux/releases/download/v0.1/esmodmanager_0.1-1_amd64.deb), открыть папку, где расположен пакет, в терминале и выполнить команду:
 ```shell
 sudo apt install ./esmodmanager_0.1-1_amd64.deb 
 ```
