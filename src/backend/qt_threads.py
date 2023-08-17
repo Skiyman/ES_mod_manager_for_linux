@@ -1,7 +1,12 @@
+import os
 import subprocess
 import time
+
 import psutil
 from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QTranslator
+
+from backend.consts import ENGLISH_TRANSLATES
 
 
 class ProcessCheckerThread(QThread):
@@ -59,5 +64,6 @@ class ParseThread(QThread):
 
     def run(self):
         self.parser.start_parse()
+
 
 

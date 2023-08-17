@@ -1,17 +1,28 @@
 import json
 import os
+import locale
 from pathlib import Path
 
-from PyQt5.QtWidgets import QDialog, QFileDialog
+from PyQt5.QtWidgets import QDialog, QFileDialog, QWidget
+from PyQt5.QtCore import QTranslator
+from PyQt5 import QtWidgets
 
-from UI.qtClass.greeting_window_qt import Ui_Dialog
+from UI.qtClass.greeting_window_qt import Ui_GreetingWindow
 from backend.consts import STEAM_PATH, DISABLED_PATH_TEMPLATE, CONFIG_TEMPLATE
 
 
-class GreetingWindow(Ui_Dialog, QDialog):
-    def __init__(self):
+class GreetingWindow(Ui_GreetingWindow, QDialog):
+    def __init__(self, app):
         super().__init__()
         self.setupUi(self)
+        self.app = app
+        self.lang = 'ru'
+        if locale.getlocale()[0] != 'ru_RU':
+            self.translator = QTranslator()
+            self.translator.load("UI/translates/English/greeting_window_en.qm")
+            self.app.installTranslator(self.translator)
+            self.retranslateUi(self)
+            self.lang = 'en'
 
         self.enable_folder = ""
         self.disable_folder = ""
@@ -56,8 +67,8 @@ class GreetingWindow(Ui_Dialog, QDialog):
         config["enabled_mods_folder"] = self.enable_folder
         config["disabled_mods_folder"] = self.disable_folder
         config["first_launch"] = False
+        config["language"] = self.lang
 
-        working_directory = os.getcwd()
         disabled_folder_path = self.home_directory + DISABLED_PATH_TEMPLATE
 
         if disabled_folder_path == self.disable_folder:
@@ -70,3 +81,8 @@ class GreetingWindow(Ui_Dialog, QDialog):
             file.truncate()
 
         self.close()
+
+    def closeEvent(self, event):
+        if not os.path.exists(self.home_directory + "/.config/esmodmanager/config.json"):
+            self.create_config()
+

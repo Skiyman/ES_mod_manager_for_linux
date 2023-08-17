@@ -20,11 +20,11 @@ def main():
     app.setWindowIcon(QtGui.QIcon('assets/logo.png'))
 
     if not os.path.exists(config_path) or config["first_launch"]:
-        greeting_window = GreetingWindow()
+        greeting_window = GreetingWindow(app)
         greeting_window.show()
         app.exec()
 
-    main_window = MainWindow()
+    main_window = MainWindow(app)
     main_window.show()
     app.exec()
 

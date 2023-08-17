@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 from pathlib import Path
 
 from PyQt5 import QtWidgets
@@ -17,7 +18,8 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
         self.main_window = window
 
         home_directory = os.path.expanduser('~')
-        self.config_path = home_directory + "/.config/esmodmanager/config.json"
+        self.config_folder = home_directory + "/.config/esmodmanager/"
+        self.config_path = self.config_folder + "config.json"
         self.config = self.get_settings()
 
         self.setup_fields()
@@ -31,6 +33,8 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
         self.browse_enabel_folder_button.clicked.connect(lambda: self.select_folder("enable_folder"))
         self.browse_disable_folder_button.clicked.connect(lambda: self.select_folder("disable_folder"))
 
+        self.open_settings_button.clicked.connect(self.show_settings_folder)
+
     @staticmethod
     def get_settings():
         home_directory = os.path.expanduser('~')
@@ -43,6 +47,9 @@ class SettingsWindow(Ui_SettingsWindow, QtWidgets.QWidget):
             return config
         except FileNotFoundError:
             return CONFIG_TEMPLATE
+
+    def show_settings_folder(self):
+        subprocess.Popen(['xdg-open', self.config_folder])
 
     def select_folder(self, folder):
         dir_name = QFileDialog.getExistingDirectory(self, "Выберите папку")

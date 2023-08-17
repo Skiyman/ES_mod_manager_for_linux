@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'SettingsWindow.ui'
+# Form implementation generated from reading ui file '../qtDesigner/SettingsWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SettingsWindow(object):
     def setupUi(self, SettingsWindow):
         SettingsWindow.setObjectName("SettingsWindow")
-        SettingsWindow.resize(700, 500)
-        SettingsWindow.setMinimumSize(QtCore.QSize(700, 500))
-        SettingsWindow.setMaximumSize(QtCore.QSize(700, 500))
+        SettingsWindow.resize(700, 605)
+        SettingsWindow.setMinimumSize(QtCore.QSize(700, 605))
+        SettingsWindow.setMaximumSize(QtCore.QSize(700, 605))
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(SettingsWindow)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -175,9 +175,30 @@ class Ui_SettingsWindow(object):
         self.horizontalLayout_4.setStretch(1, 20)
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)
         self.verticalLayout.addLayout(self.verticalLayout_2)
-        self.verticalLayout_3.addLayout(self.verticalLayout)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem)
+        self.verticalLayout.addItem(spacerItem)
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.open_settings_button = QtWidgets.QPushButton(SettingsWindow)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.open_settings_button.setFont(font)
+        self.open_settings_button.setObjectName("open_settings_button")
+        self.horizontalLayout_5.addWidget(self.open_settings_button)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem1)
+        self.horizontalLayout_5.setStretch(0, 5)
+        self.horizontalLayout_5.setStretch(1, 5)
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.verticalLayout.setStretch(0, 2)
+        self.verticalLayout.setStretch(1, 2)
+        self.verticalLayout.setStretch(2, 2)
+        self.verticalLayout.setStretch(4, 2)
+        self.verticalLayout_3.addLayout(self.verticalLayout)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem2)
         self.verticalLayout_3.setStretch(0, 6)
 
         self.retranslateUi(SettingsWindow)
@@ -197,3 +218,14 @@ class Ui_SettingsWindow(object):
         self.browse_enabel_folder_button.setText(_translate("SettingsWindow", "Выбрать"))
         self.disabel_folder_label.setText(_translate("SettingsWindow", "Папка для выключения: "))
         self.browse_disable_folder_button.setText(_translate("SettingsWindow", "Выбрать"))
+        self.open_settings_button.setText(_translate("SettingsWindow", "Открыть папку с настройками"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    SettingsWindow = QtWidgets.QWidget()
+    ui = Ui_SettingsWindow()
+    ui.setupUi(SettingsWindow)
+    SettingsWindow.show()
+    sys.exit(app.exec_())

@@ -1,26 +1,35 @@
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QAction
 
-from UI.greeting_window import GreetingWindow
-from UI.qtClass.MainWindow_qt import Ui_Es_mod_namager_linux
+from UI.qtClass.main_window_qt import Ui_Es_mod_namager_linux
 from UI.settings_window import SettingsWindow
 from backend.mods_editor import ModsEditor
 from backend.parser import Parser
 from backend.qt_threads import ProcessCheckerThread, ModsMoverThread, ParseThread
 
+from UI.translator import Translator
+
 
 class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
-    def __init__(self):
+    def __init__(self, application):
 
         super().__init__()
-        self.setupUi(self)
+        self.language_select_group = None
         self.process_checker = None
         self.mods_move_thread = None
         self.parse_thread = None
 
+        self.setupUi(self)
+
+        self.app = application
+
         self.settings_window = SettingsWindow(self)
         self.config = SettingsWindow.get_settings()
 
-        self.greeting_window = GreetingWindow()
+        self.translator = Translator(self, self.settings_window, self.app)
+        self._translators = []
+        self.create_language_select_group()
+        self.translator.set_language(self.config['language'])
 
         self.parser = Parser(self.config['enabled_mods_folder'], self.config['disabled_mods_folder'])
         self.editor = ModsEditor(self.config)
@@ -32,6 +41,18 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
         self.connect_buttons()
         self.fill_mods_lists()
 
+    def create_language_select_group(self):
+        self.language_select_group = QtWidgets.QActionGroup(self)
+        self.language_select_group.setObjectName("language_select_group")
+
+        self.language_select_group.addAction(self.english_action)
+        self.language_select_group.addAction(self.russian_action)
+
+        if self.config['language'] == 'en':
+            self.english_action.setChecked(True)
+        elif self.config['language'] == 'ru':
+            self.russian_action.setChecked(True)
+
     def connect_buttons(self):
         self.btn_update_mods_db.clicked.connect(self.update_mod_db)
         self.enabled_mods_list.itemDoubleClicked.connect(self.clicked_item_replace)
@@ -40,7 +61,9 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
         self.btn_enable_all.clicked.connect(self.enable_all)
         self.btn_disable_all.clicked.connect(self.disable_all)
 
-        self.settings_menu.triggered.connect(self.open_settings_menu)
+        self.app_settings.triggered.connect(self.open_settings_menu)
+        self.english_action.triggered.connect(lambda: self.translator.set_language(lang='en'))
+        self.russian_action.triggered.connect(lambda: self.translator.set_language(lang='ru'))
 
     def open_settings_menu(self):
         self.settings_window.show()
@@ -75,7 +98,11 @@ class MainWindow(Ui_Es_mod_namager_linux, QMainWindow):
 
     def update_mod_db(self):
         self.btn_update_mods_db.setEnabled(False)
-        self.statusbar.showMessage("Начинаю поиск модов. Пожалуйста, подождите...")
+        if self.config['language'] == 'ru':
+            self.statusbar.showMessage("Начинаю поиск модов. Пожалуйста, подождите...")
+        elif self.config['language'] == 'en':
+            self.statusbar.showMessage("Looking for mods. Please wait...")
+
         self.parse_thread = ParseThread(parser=self.parser)
 
         self.parse_thread.finished.connect(self.fill_mods_lists)

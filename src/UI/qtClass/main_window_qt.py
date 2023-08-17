@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainWindow.ui'
+# Form implementation generated from reading ui file '../qtDesigner/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -43,9 +43,11 @@ class Ui_Es_mod_namager_linux(object):
         self.disabled_mods_label.setObjectName("disabled_mods_label")
         self.list_view_layout.addWidget(self.disabled_mods_label, 0, 1, 1, 1)
         self.enabled_mods_list = QtWidgets.QListWidget(self.main_widget)
+        self.enabled_mods_list.setWordWrap(True)
         self.enabled_mods_list.setObjectName("enabled_mods_list")
         self.list_view_layout.addWidget(self.enabled_mods_list, 1, 0, 1, 1)
         self.disabled_mods_list = QtWidgets.QListWidget(self.main_widget)
+        self.disabled_mods_list.setWordWrap(True)
         self.disabled_mods_list.setObjectName("disabled_mods_list")
         self.list_view_layout.addWidget(self.disabled_mods_list, 1, 1, 1, 1)
         self.main_layout.addLayout(self.list_view_layout)
@@ -76,6 +78,8 @@ class Ui_Es_mod_namager_linux(object):
         self.menubar.setObjectName("menubar")
         self.settings_menu = QtWidgets.QMenu(self.menubar)
         self.settings_menu.setObjectName("settings_menu")
+        self.menu = QtWidgets.QMenu(self.settings_menu)
+        self.menu.setObjectName("menu")
         Es_mod_namager_linux.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(Es_mod_namager_linux)
         font = QtGui.QFont()
@@ -86,13 +90,22 @@ class Ui_Es_mod_namager_linux(object):
         self.statusbar.setSizeGripEnabled(True)
         self.statusbar.setObjectName("statusbar")
         Es_mod_namager_linux.setStatusBar(self.statusbar)
-        self.mods_path_settings = QtWidgets.QAction(Es_mod_namager_linux)
-        self.mods_path_settings.setObjectName("mods_path_settings")
+        self.app_settings = QtWidgets.QAction(Es_mod_namager_linux)
+        self.app_settings.setObjectName("app_settings")
         self.abbout_guide = QtWidgets.QAction(Es_mod_namager_linux)
         self.abbout_guide.setObjectName("abbout_guide")
         self.abbout_program = QtWidgets.QAction(Es_mod_namager_linux)
         self.abbout_program.setObjectName("abbout_program")
-        self.settings_menu.addAction(self.mods_path_settings)
+        self.english_action = QtWidgets.QAction(Es_mod_namager_linux)
+        self.english_action.setCheckable(True)
+        self.english_action.setObjectName("english_action")
+        self.russian_action = QtWidgets.QAction(Es_mod_namager_linux)
+        self.russian_action.setCheckable(True)
+        self.russian_action.setObjectName("russian_action")
+        self.menu.addAction(self.english_action)
+        self.menu.addAction(self.russian_action)
+        self.settings_menu.addAction(self.app_settings)
+        self.settings_menu.addAction(self.menu.menuAction())
         self.menubar.addAction(self.settings_menu.menuAction())
 
         self.retranslateUi(Es_mod_namager_linux)
@@ -108,6 +121,19 @@ class Ui_Es_mod_namager_linux(object):
         self.btn_update_mods_db.setText(_translate("Es_mod_namager_linux", "Обновить cписок модов"))
         self.btn_Launch_es.setText(_translate("Es_mod_namager_linux", "Запустить БЛ"))
         self.settings_menu.setTitle(_translate("Es_mod_namager_linux", "Настройки"))
-        self.mods_path_settings.setText(_translate("Es_mod_namager_linux", "Настройки..."))
+        self.menu.setTitle(_translate("Es_mod_namager_linux", "Язык"))
+        self.app_settings.setText(_translate("Es_mod_namager_linux", "Настройки..."))
         self.abbout_guide.setText(_translate("Es_mod_namager_linux", "Справка по использованию"))
         self.abbout_program.setText(_translate("Es_mod_namager_linux", "О мненджере"))
+        self.english_action.setText(_translate("Es_mod_namager_linux", "Английский"))
+        self.russian_action.setText(_translate("Es_mod_namager_linux", "Русский"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Es_mod_namager_linux = QtWidgets.QMainWindow()
+    ui = Ui_Es_mod_namager_linux()
+    ui.setupUi(Es_mod_namager_linux)
+    Es_mod_namager_linux.show()
+    sys.exit(app.exec_())

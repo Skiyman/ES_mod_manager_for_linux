@@ -115,6 +115,7 @@ class Parser:
             with open(self.mods_db_path, 'w') as file:
                 json.dump(self.mods_db, file, indent=4, ensure_ascii=False)
                 file.truncate()
+            return {}
 
     def delete_mod(self, mod_id):
         with open(self.mods_db_path, "r+") as file:

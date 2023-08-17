@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>GreetingWindow</class>
+ <widget class="QDialog" name="GreetingWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,11 +23,17 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Приветствие</string>
+   <string>ES mod manager for Linux</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,2,5,0,0,0,0,0,0">
+  <property name="inputMethodHints">
+   <set>Qt::ImhNone</set>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,5,1,4,1,4,1,1">
    <item>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="greeting_label">
      <property name="font">
       <font>
        <pointsize>14</pointsize>
@@ -93,9 +99,9 @@
      <property name="text">
       <string>— Название модов менеждер получает из мастерской Steam. Потому для первого запуска и последующего обновления списка модов необходимо подключение к интернету. 
 
-— Настоятельно рекомендуется указывать папку для выключения модов, расположенную на том же диске, где и моды. Это поможет быстрее переносить моды
+— Настоятельно рекомендуется указывать папку для выключения модов, расположенную на том же диске, где и папка мастерской Steam. Это поможет быстрее переносить моды
 
-— Если при выборе папки не отображаются скрытые папки, нажмите ПКМ и выберите соотвкетствующий пункт в контекстном меню.</string>
+— Если при выборе пути не отображаются скрытые папки, нажмите ПКМ и выберите соответствующий пункт в контекстном меню.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -154,7 +160,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
@@ -169,10 +175,7 @@
       <widget class="QPushButton" name="browse_enable_folder_button">
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <property name="text">
@@ -225,7 +228,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
@@ -243,7 +246,7 @@
       <widget class="QPushButton" name="browse_disable_folder_button">
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
          <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
@@ -276,6 +279,11 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="layoutDirection">
       <enum>Qt::RightToLeft</enum>

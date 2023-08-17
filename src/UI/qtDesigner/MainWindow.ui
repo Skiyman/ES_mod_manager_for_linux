@@ -68,10 +68,18 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QListWidget" name="enabled_mods_list"/>
+         <widget class="QListWidget" name="enabled_mods_list">
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QListWidget" name="disabled_mods_list"/>
+         <widget class="QListWidget" name="disabled_mods_list">
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -130,7 +138,15 @@
     <property name="title">
      <string>Настройки</string>
     </property>
-    <addaction name="mods_path_settings"/>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>Язык</string>
+     </property>
+     <addaction name="english_action"/>
+     <addaction name="russian_action"/>
+    </widget>
+    <addaction name="app_settings"/>
+    <addaction name="menu"/>
    </widget>
    <addaction name="settings_menu"/>
   </widget>
@@ -146,7 +162,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <action name="mods_path_settings">
+  <action name="app_settings">
    <property name="text">
     <string>Настройки...</string>
    </property>
@@ -159,6 +175,22 @@
   <action name="abbout_program">
    <property name="text">
     <string>О мненджере</string>
+   </property>
+  </action>
+  <action name="english_action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Английский</string>
+   </property>
+  </action>
+  <action name="russian_action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Русский</string>
    </property>
   </action>
  </widget>
