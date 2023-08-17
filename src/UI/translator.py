@@ -40,10 +40,17 @@ class Translator:
         self._translators.clear()
 
         if lang == "en":
-            translation_files = os.listdir(ENGLISH_TRANSLATES)
+            translation_path = ENGLISH_TRANSLATES
+            try:
+                translation_files = os.listdir(translation_path)
+
+            except FileNotFoundError:
+                translation_path = "/opt/esmodmanager/UI/translates/English/"
+                translation_files = os.listdir(translation_path)
+
             for file in translation_files:
                 self._translators.append(QTranslator())
-                self._translators[-1].load(ENGLISH_TRANSLATES + file)
+                self._translators[-1].load(translation_path + file)
 
             set_translators()
         else:
