@@ -34,7 +34,7 @@ Python3 request, Python3 PyQt5
 
 **For Debian/Ubuntu**:
 ```bash
-sudo apt install make git gcc upx-ucl python3 python3-pip python3-wheel \
+sudo apt install make git gcc python3 python3-pip python3-wheel \
   python3-aiohttp python3-bs4 python3-lxml python3-psutil\
   python3-requests python3-pyqt5
 ```
