@@ -12,8 +12,8 @@ Desktop application for easier launch visual novel "Everlasting summer". Built f
 
 ### Verified distributive:
 - [x] Debian 12 «Bookworm»
+- [x] ArchLinux
 - [ ] Ubuntu 22.04
-- [ ] ArchLinux
 - [ ] Fedora
 
 Installation:
@@ -37,6 +37,13 @@ Python3 request, Python3 PyQt5
 sudo apt install make git gcc upx-ucl python3 python3-pip python3-wheel \
   python3-aiohttp python3-bs4 python3-lxml python3-psutil\
   python3-requests python3-pyqt5
+```
+
+**For Arch**:
+```bash
+sudo pacman -S make git gcc python python-pip python-wheel \
+python-aiohttp python-beautifulsoup4 python-lxml python-psutil \
+python-requests python-pyqt5 
 ```
 
 ### Run from source code:
